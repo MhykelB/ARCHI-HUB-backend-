@@ -59,32 +59,4 @@ const login = async (req, res) => {
   }
 };
 
-const createNewPasswordToken = async (req, res) => {
-  const { email } = req.body;
-  const user = await userSchema.findOne({ email: email });
-  if (!user) {
-    throw new unauthenticatedError("Invalid Credentials");
-  }
-  try {
-    const token = await jwt.sign(
-      { email: user.password },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "20s",
-      }
-    );
-    user.set({ token: token });
-    await user.save();
-    await sendNotificationToOne("change-password", {
-      id: user_id,
-      url: `http://localhost:5000/reset-password/${token}`,
-    });
-    res
-      .status(201)
-      .json({ success: true, message: `reset-link sent with ${token}` });
-  } catch (error) {
-    throw error;
-  }
-};
-
 module.exports = { signUp, login };

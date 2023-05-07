@@ -45,4 +45,4 @@ const setNewPassword = async (req, res) => {
     throw error;
   }
 };
-module.exports = { createNewPasswordToken };
+module.exports = { createNewPasswordToken, setNewPassword };
