@@ -52,3 +52,14 @@ td:nth-of-type(even) {
 tr:nth-of-type(5th) {
   margin-bottom: 3rem;
 }
+
+@media (max-width: 1000px) {
+  /* .main {
+    display: grid;
+    grid-template-columns: 20em;
+    gap: 2em;
+  }
+  .nav--title {
+    justify-content: center;
+  } */
+}
