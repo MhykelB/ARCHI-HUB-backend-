@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <title>API endpoints</title>
+  </head>
+  <body>
+    <section class="table-container">
+      <table>
+        <tr>
+          <th>Endpoints</th>
+          <th>Request Body</th>
+        </tr>
+        <tr>
+          <td>
+            Login : <span>http://archi-hub-backend.vercel.app/auth/login</span>
+          </td>
+          <td>{email : user's email, password : user's password}</td>
+        </tr>
+        <tr>
+          <td>
+            Register :
+            <span>http://archi-hub-backend.vercel.app/auth/register</span>
+          </td>
+          <td>{firstName, lastName,userName,email,password,}</td>
+        </tr>
+        <tr>
+          <td>
+            Create and send reset token link:
+            <span
+              >http://archi-hub-backend.vercel.app/resetPassword/createToken</span
+            >
+          </td>
+          <td>{email : user's email}</td>
+        </tr>
+        <tr>
+          <td>
+            Reset Password:
+            <span
+              >http://archi-hub-backend.vercel.app/resetPassword/setNewPassword</span
+            >
+          </td>
+          <td>
+            {newPassword : user's newpassword}
+            <p>
+              Retrieve token from req.params and include it in
+              headers.authorization
+            </p>
+          </td>
+        </tr>
+      </table>
+    </section>
+  </body>
+  <script></script>
+</html>
