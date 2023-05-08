@@ -49,6 +49,16 @@ const sendNotificationToOne = async (triggerKey, mailer) => {
   });
   return result;
 };
+const sendResetToken = async (triggerKey, details) => {
+  const result = await novu.trigger(triggerKey, {
+    to: details.id,
+    payload: {
+      name: details.userName,
+      link: details.link,
+    },
+  });
+  return result;
+};
 
 module.exports = {
   createNewSubscriber,
@@ -57,4 +67,5 @@ module.exports = {
   sendNotificationToMany,
   sendNotificationToOne,
   unSubscriberToTopic,
+  sendResetToken,
 };
