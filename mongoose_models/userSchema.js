@@ -27,11 +27,7 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-// hash password before save
-userSchema.pre("save", async function () {
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+// didnt use hash password before save cos when the user sets a nwe reset token, save would be called and the hash would be hashed again,  thereby altering the password, so call it specifically
 
 userSchema.methods.createJwt = async function () {
   const token = jwt.sign(

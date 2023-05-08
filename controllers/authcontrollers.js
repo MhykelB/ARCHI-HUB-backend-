@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const userSchema = require("../mongoose_models/userSchema");
+const bcrypt = require("bcrypt");
 const { badRequest, unauthenticatedError } = require("../errorHandler");
 const {
   createNewSubscriber,
@@ -10,12 +11,18 @@ const {
 const { Novu } = require("@novu/node");
 
 const signUp = async (req, res) => {
-  const { firstName, lastName, userName, password, email } = req.body;
+  async function hashPassword(input) {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(input, salt);
+    return hash;
+  }
+  let { firstName, lastName, userName, password, email } = req.body;
   if (!firstName || !lastName || !userName || !password || !email) {
     console.log("missing fields");
     throw new badRequest("missing fields");
   }
   try {
+    req.body.password = await hashPassword(req.body.password);
     await userSchema.createIndexes({ username: 1 }); // takes care of duplicate username issue
     const newUser = await userSchema.create(req.body);
     if (!newUser) {
@@ -38,15 +45,18 @@ const signUp = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log(password);
   if (!email || !password) {
-    throw error;
+    throw new unauthenticatedError("Unauthorized, invalid credentials");
   }
   try {
     const isUser = await userSchema.findOne({ email: email });
+    console.log(isUser.userName);
     if (!isUser) {
       throw error;
     }
     const checkPassword = await isUser.comparePassword(password);
+    console.log(checkPassword);
     if (!checkPassword) {
       throw error;
     }

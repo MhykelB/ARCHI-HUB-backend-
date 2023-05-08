@@ -53,7 +53,7 @@ const sendResetToken = async (triggerKey, details) => {
   const result = await novu.trigger(triggerKey, {
     to: details.id,
     payload: {
-      name: details.userName,
+      name: details.name,
       link: details.link,
     },
   });
