@@ -42,7 +42,7 @@ const setNewPassword = async (req, res) => {
   }
   let { newPassword } = req.body;
   const reqHeaders = req.headers.authorization;
-  console.log(reqHeaders);
+
   if (!reqHeaders || !newPassword) {
     throw new unauthenticatedError("Invalid token");
   }
@@ -55,7 +55,7 @@ const setNewPassword = async (req, res) => {
           throw new unauthenticatedError("Invalid Token, maybe expired");
         }
 
-        const user = await userSchema.findOne({ resetToken: token });
+        const user = await userSchema.findOne({ userToken: token });
         if (!user) {
           throw new unauthenticatedError("User doesn't exist");
         }
