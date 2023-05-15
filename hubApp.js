@@ -29,9 +29,6 @@ expressApp.get("/docs", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./public/index.html"));
   // res.send("good t");
 });
-expressApp.get(`/resetPassword/:token`, (req, res) => {
-  res.send(`the token is ${req.params.token}`);
-});
 
 const start = async function () {
   await connectDB(process.env.DB_URL).then(() => {

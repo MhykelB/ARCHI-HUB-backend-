@@ -114,16 +114,16 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   console.log(password);
   if (!email || !password) {
-    throw new unauthenticatedError("Unauthorized, invalid credentials");
+    throw new badRequest("Unauthorized, fields can't be empty");
   }
   try {
     const isUser = await userSchema.findOne({ email: email });
     if (!isUser) {
-      throw error;
+      throw new unauthenticatedError("Unauthorized, invalid credentials");
     }
     const checkPassword = await isUser.comparePassword(password);
     if (!checkPassword) {
-      throw error;
+      throw new unauthenticatedError("Unauthorized, invalid credentials");
     }
     const token = await isUser.createJwt();
     return res
