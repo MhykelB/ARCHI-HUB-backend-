@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
-const bcrpyt = require("bcrpyt");
-const jwt = require("jsonwebtoken");
 
 const jobPostSchema = new mongoose.Schema(
   {
-    created_by_ID: { type: mongoose.Types.ObjectId, ref: "" },
+    created_by_ID: { type: mongoose.Types.ObjectId, ref: "User" },
     created_by_user: { type: String },
-    reactions: { type: Number },
-    text: {},
-    tags: [],
+    description: { type: String, required: [true, "please describe job"] },
+    location: { type: String, required: [true, "describe job location"] },
+    pay: { type: String, default: "not specified" },
+    interactions: [],
+    tags: [], //CONVERT ALL TO LOWERCASE
   },
   { timestamps: true }
 );

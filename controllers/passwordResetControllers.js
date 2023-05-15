@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
-const userSchema = require("../mongoose_models/userSchema");
-const { badRequest, unauthenticatedError } = require("../errorHandler");
+const { userSchema } = require("../mongoose_models/userSchema");
+const { unauthenticatedError } = require("../errorHandler");
 const { sendResetToken } = require("../novu/novu");
-const { Novu } = require("@novu/node");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -15,17 +13,17 @@ const createNewPasswordToken = async (req, res) => {
     throw new unauthenticatedError("Invalid Credentials");
   }
   try {
-    const token = jwt.sign({ email: user.firstName }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+    const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
+      expiresIn: 1800,
     });
-    user.set({ resetToken: token });
+    user.set({ userToken: token });
     await user.save();
     await sendResetToken("reset-password", {
       id: user._id,
       name: user.userName,
       link: `https://archi-hub-backend.vercel.app/resetPassword/${token}`,
     });
-    //LINK WILL LEAD TO A FRONT PAGE
+    //LINK WILL LEAD TO A FRONT PAGE (should be defined by front-end)
     res.status(201).json({
       success: true,
       message: `reset-link sent with token`,
@@ -58,6 +56,9 @@ const setNewPassword = async (req, res) => {
         }
 
         const user = await userSchema.findOne({ resetToken: token });
+        if (!user) {
+          throw new unauthenticatedError("User doesn't exist");
+        }
         user.set({ password: await hashPassword(newPassword) });
         await user.save();
         res

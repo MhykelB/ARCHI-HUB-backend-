@@ -29,6 +29,14 @@ const createNewSubscriber = async (userObj) => {
     lastName: userObj.lastName,
   });
 };
+const updateSubcriber = async (userObj) => {
+  const result = await novu.subscribers.update(userObj.id, {
+    firstName: userObj.firstName,
+    lastName: userObj.lastName,
+    data: { interest: userObj.interests },
+  });
+  return result;
+};
 
 // will require notification triggerer name and id, exempt him/her from receiving a notification by passing in action
 const sendNotificationToMany = async (triggerKey, topicKey, mailer) => {
@@ -45,6 +53,15 @@ const sendNotificationToOne = async (triggerKey, mailer) => {
     to: mailer.id,
     payload: {
       sender: mailer.userName,
+    },
+  });
+  return result;
+};
+const completeSignUpNotice = async (triggerKey, userInfo) => {
+  const result = await novu.trigger(triggerKey, {
+    to: userInfo.id,
+    payload: {
+      link: userInfo.link,
     },
   });
   return result;
@@ -68,4 +85,6 @@ module.exports = {
   sendNotificationToOne,
   unSubscriberToTopic,
   sendResetToken,
+  completeSignUpNotice,
+  updateSubcriber,
 };

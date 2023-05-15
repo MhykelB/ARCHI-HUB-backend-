@@ -4,7 +4,7 @@ const {
   createNewPasswordToken,
   setNewPassword,
 } = require("../controllers/passwordResetControllers");
-
+// base  = /resetPassword
 router.post("/createToken", createNewPasswordToken);
 router.post("/setNewPassword", setNewPassword);
 
