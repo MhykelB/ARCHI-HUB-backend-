@@ -20,7 +20,7 @@ const getAllJobs = async (req, res) => {
   const { search } = req.query;
   const queryObject = {};
   if (search) {
-    queryObject.tags = { $regex: `/${search}$/`, $options: "i" };
+    // queryObject.tags = { $regex: , $options: "i" };
     // queryObject.tags = search;
     console.log(queryObject);
     // {tags : {$in:search}}

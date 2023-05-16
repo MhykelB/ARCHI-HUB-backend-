@@ -1,6 +1,7 @@
 //modules
 const express = require("express");
 const expressApp = express();
+const cors = require("cors");
 require("express-async-errors");
 const errorHandler = require("./errorHandler/errorHandler");
 const connectDB = require("./db/connectDB");
@@ -14,6 +15,13 @@ require("@novu/node").Novu;
 // import { Novu } from "@novu/node";
 
 //middleware
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 expressApp.use(express.static("./public"));
 expressApp.use(express.json()); //allows access to req.body
 expressApp.use("/auth", authRouter);
