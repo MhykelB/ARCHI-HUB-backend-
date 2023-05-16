@@ -44,7 +44,8 @@ const preSignUp = async (req, res) => {
     //   id: newUser._id,
     //   link: `https://archi-hub-backend.vercel.app/auth/completeSignUp/${signUpToken}`,
     // });
-
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    res.setHeader("Access-Control-Allow-Origin", "*");
     return res
       .status(201)
       .json({ success: true, message: "signup link sent", signUpToken });
