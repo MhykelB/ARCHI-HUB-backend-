@@ -1,8 +1,8 @@
 //modules
 const express = require("express");
 const expressApp = express();
-const cors = require("cors");
 require("express-async-errors");
+const cors = require("cors");
 const errorHandler = require("./errorHandler/errorHandler");
 const connectDB = require("./db/connectDB");
 const authRouter = require("./routes/authRouter");
@@ -21,7 +21,7 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+expressApp.use(cors(corsOptions));
 expressApp.use(express.static("./public"));
 expressApp.use(express.json()); //allows access to req.body
 expressApp.use("/auth", authRouter);
