@@ -93,7 +93,7 @@ const updateJob = async (req, res) => {
     }
     return res
       .status(201)
-      .json({ success: true, message: "job updated successful", updatedJob });
+      .json({ success: true, message: "job updated successful", queryObject });
   } catch (error) {
     throw error;
   }
