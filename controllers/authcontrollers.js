@@ -120,7 +120,7 @@ const login = async (req, res) => {
   try {
     const isUser = await userSchema.findOne({ email: email });
     if (!isUser) {
-      throw new unauthenticatedError("Unauthorized, invalid credentials");
+      throw new unauthenticatedError("User deosn't exist");
     }
     const checkPassword = await isUser.comparePassword(password);
     if (!checkPassword) {

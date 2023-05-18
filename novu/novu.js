@@ -12,7 +12,7 @@ const createTopic = async (topicKey, topicName) => {
 
 // will require userid,
 const addSubscribersToTopic = async (topicKey, ID) => {
-  return novu.topics.addSubscribersToTopic(topicKey, {
+  return novu.topics.addSubscribers(topicKey, {
     subscribers: [ID],
   });
 };
