@@ -64,7 +64,7 @@ const postJob = async (req, res) => {
 const updateJob = async (req, res) => {
   const jobID = req.params.jobID;
   let queryObject = {};
-  const { description, location, pay, tags } = req.query;
+  const { description, location, pay, tags } = req.body;
   if (!description && !location && !pay && !tags === "") {
     throw new badRequest("missing fields");
   }
