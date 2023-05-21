@@ -73,7 +73,8 @@ const signUp = async (req, res) => {
         if (!preUser) {
           throw new unauthenticatedError("User not found");
         }
-        (req.body._id = preUser._id), (req.body.userToken = preUser.userToken);
+        // (req.body._id = preUser._id),
+        req.body.userToken = preUser.userToken;
         req.body.password = preUser.password;
         req.body.email = preUser.email;
         // req.body = {
@@ -85,9 +86,9 @@ const signUp = async (req, res) => {
         // };
         userSchema.createIndexes({ username: 1, email: 1 }); // takes care of duplicate issues
         const newUser = await userSchema.create(req.body);
-        if (newUser) {
-          await tempUserSchema.deleteOne({ _id: preUser._id });
-        }
+        // if (newUser) {
+        //   await tempUserSchema.deleteOne({ _id: preUser._id });
+        // }
 
         // await sendNotificationToOne("user-signed-up", {
         //   id: newUser._id,

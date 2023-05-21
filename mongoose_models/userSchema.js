@@ -12,6 +12,7 @@ const tempUserSchema = new mongoose.Schema(
 );
 const userSchema = new mongoose.Schema(
   {
+    // _id: { type: mongoose.Types.ObjectId, ref: "tempUser" },
     userName: {
       type: String,
       maxlength: 15,

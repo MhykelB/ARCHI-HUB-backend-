@@ -10,9 +10,9 @@ const {
 } = require("../novu/novu");
 
 const getOneUser = async (req, res) => {
-  const { ID } = req.params.ID;
+  const ID = req.params.ID;
   try {
-    const user = await userSchema.findOne({ _id: ID });
+    const user = await userSchema.findById(ID);
     res.status(201).json(user);
   } catch (error) {
     throw error;
@@ -99,9 +99,10 @@ const updateJob = async (req, res) => {
   }
 };
 const reactToJob = async (req, res) => {
-  const { userID, username } = req.user;
-  const { jobID } = req.params.jobID;
+  const { userID } = req.user;
+  const jobID = req.params.jobID;
   let job = await jobPostSchema.findById(jobID);
+  console.log(job);
   if (job) {
     try {
       if (job.interactions.includes(userID)) {
