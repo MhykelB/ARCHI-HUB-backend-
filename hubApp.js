@@ -23,6 +23,7 @@ const corsOptions = {
 
 expressApp.use(cors(corsOptions));
 expressApp.use(express.static("./public"));
+expressApp.use(express.urlencoded({ extended: false })); // allow access to html from sent from req.body
 expressApp.use(express.json()); //allows access to req.body
 expressApp.use("/auth", authRouter);
 expressApp.use("/jobs", authMiddleware, jobsRouter);
