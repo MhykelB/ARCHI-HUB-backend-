@@ -1,8 +1,8 @@
 //modules
 
 //swagger
-const swaggerUI = require("swagger-ui-express");
-const YAML = require("yamljs");
+// const swaggerUI = require("swagger-ui-express");
+// const YAML = require("yamljs");
 // const swaggerDoc = YAML.load("./swagger.yaml");
 // const swaggerDoc = require("./swagger.json");
 
