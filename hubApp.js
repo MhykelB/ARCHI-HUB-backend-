@@ -42,10 +42,10 @@ const port = process.env.PORT || 6000;
 expressApp.get("/", (req, res) => {
   res.send("Your back is being watched !!!");
 });
-expressApp.get("/docs", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./public/index.html"));
-  // res.send("good t");
-});
+// expressApp.get("/docs", (req, res) => {
+//   res.sendFile(path.resolve(__dirname, "./public/index.html"));
+
+// });
 
 const start = async function () {
   await connectDB(process.env.DB_URL).then(() => {
