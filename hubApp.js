@@ -1,10 +1,17 @@
 //modules
+//swagger
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDoc = YAML.load("./swagger.yaml");
+
+//express
 const express = require("express");
 const expressApp = express();
 require("express-async-errors");
 const cors = require("cors");
 const errorHandler = require("./errorHandler/errorHandler");
 const connectDB = require("./db/connectDB");
+//Routers
 const authRouter = require("./routes/authRouter");
 const resetPasswordRouter = require("./routes/resetPassword");
 const jobsRouter = require("./routes/jobsRoutes");
@@ -12,7 +19,6 @@ const path = require("path");
 const authMiddleware = require("./middleWare/authMiddleWare");
 require("dotenv").config();
 require("@novu/node").Novu;
-// import { Novu } from "@novu/node";
 
 //middleware
 const corsOptions = {
@@ -25,6 +31,8 @@ expressApp.use(cors(corsOptions));
 expressApp.use(express.static("./public"));
 expressApp.use(express.urlencoded({ extended: false })); // allow access to html from sent from req.body
 expressApp.use(express.json()); //allows access to req.body
+
+expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 expressApp.use("/auth", authRouter);
 expressApp.use("/jobs", authMiddleware, jobsRouter);
 expressApp.use("/resetPassword", resetPasswordRouter);
