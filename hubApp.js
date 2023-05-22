@@ -5,6 +5,9 @@ const swaggerUI = require("swagger-ui-express");
 // const YAML = require("yamljs");
 // const swaggerDoc = YAML.load("./public/swagger.yaml");
 const swaggerDoc = require("./swagger.json");
+const options = {
+  customCssUrl: "https://unpkg.com/swagger-ui-dist@3/swagger-ui.css",
+};
 
 //express
 const express = require("express");
