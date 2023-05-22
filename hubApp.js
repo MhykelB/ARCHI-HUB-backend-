@@ -1,8 +1,5 @@
 //modules
 //swagger
-// const swaggerUI = require("swagger-ui-express");
-// const YAML = require("yamljs");
-// const swaggerDoc = YAML.load("./swagger.yaml");
 
 //express
 const express = require("express");
@@ -32,7 +29,12 @@ expressApp.use(express.static("./public"));
 expressApp.use(express.urlencoded({ extended: false })); // allow access to html from sent from req.body
 expressApp.use(express.json()); //allows access to req.body
 
-// expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+//swagger
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDoc = YAML.load("./swagger.yaml");
+
+expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 expressApp.use("/auth", authRouter);
 expressApp.use("/jobs", authMiddleware, jobsRouter);
 expressApp.use("/resetPassword", resetPasswordRouter);
@@ -42,10 +44,6 @@ const port = process.env.PORT || 6000;
 expressApp.get("/", (req, res) => {
   res.send("Your back is being watched !!!");
 });
-// expressApp.get("/docs", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "./public/index.html"));
-
-// });
 
 const start = async function () {
   await connectDB(process.env.DB_URL).then(() => {
