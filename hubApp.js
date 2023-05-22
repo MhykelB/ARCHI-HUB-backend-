@@ -3,7 +3,7 @@ const path = require("path");
 //swagger
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
-const swaggerDoc = YAML.load("./swagger.yaml");
+const swaggerDoc = YAML.load("./public/swagger.yaml");
 // const swaggerDoc = require("./swagger.json");
 
 //express
