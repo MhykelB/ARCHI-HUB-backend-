@@ -41,9 +41,10 @@ expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 expressApp.use(errorHandler);
 const port = process.env.PORT || 6000;
 
-expressApp.get("/", (req, res) => {
-  res.send("Your back is being watched !!!");
-});
+// expressApp.get("/", (req, res) => {
+//   res.send("Your back is being watched !!!");
+
+// });
 
 const start = async function () {
   await connectDB(process.env.DB_URL).then(() => {
