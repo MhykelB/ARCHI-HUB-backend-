@@ -17,7 +17,6 @@ const connectDB = require("./db/connectDB");
 const authRouter = require("./routes/authRouter");
 const resetPasswordRouter = require("./routes/resetPassword");
 const jobsRouter = require("./routes/jobsRoutes");
-const path = require("path");
 const authMiddleware = require("./middleWare/authMiddleWare");
 require("dotenv").config();
 require("@novu/node").Novu;
