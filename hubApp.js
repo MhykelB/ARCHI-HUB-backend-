@@ -34,7 +34,7 @@ const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
 const swaggerDoc = YAML.load("./swagger.yaml");
 
-expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+// expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 expressApp.use("/auth", authRouter);
 expressApp.use("/jobs", authMiddleware, jobsRouter);
 expressApp.use("/resetPassword", resetPasswordRouter);
