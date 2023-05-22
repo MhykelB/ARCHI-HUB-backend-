@@ -30,9 +30,9 @@ expressApp.use(express.urlencoded({ extended: false })); // allow access to html
 expressApp.use(express.json()); //allows access to req.body
 
 //swagger
-const swaggerUI = require("swagger-ui-express");
-const YAML = require("yamljs");
-const swaggerDoc = YAML.load("./swagger.yaml");
+// const swaggerUI = require("swagger-ui-express");
+// const YAML = require("yamljs");
+// const swaggerDoc = YAML.load("./swagger.yaml");
 
 // expressApp.use("/api_docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 expressApp.use("/auth", authRouter);
