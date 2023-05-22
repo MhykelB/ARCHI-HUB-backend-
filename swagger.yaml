@@ -5,7 +5,7 @@ info:
   contact: {}
   version: "1.0"
 servers:
-  - url: http://example.com
+  - url: https://archi-hub-backend.vercel.app/
     variables: {}
 paths:
   /auth/completeSignUp/{token}:
