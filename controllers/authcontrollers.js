@@ -39,13 +39,11 @@ const preSignUp = async (req, res) => {
     );
     newUser.set({ userToken: signUpToken });
     await newUser.save();
-    // await createNewSubscriber(newUser); // logic autoadds subcriber to signup topic
-    // await completeSignUpNotice("complete-signup", {
-    //   id: newUser._id,
-    //   link: `https://archi-hub-backend.vercel.app/auth/completeSignUp/${signUpToken}`,
-    // });
-    // res.setHeader("Access-Control-Allow-Credentials", true);
-    // res.setHeader("Access-Control-Allow-Origin", "*");
+    await createNewSubscriber(newUser); // logic autoadds subcriber to signup topic
+    await completeSignUpNotice("complete-signup", {
+      id: newUser._id,
+      link: `https://archi-hub-backend.vercel.app/auth/completeSignUp/${signUpToken}`,
+    });
     return res
       .status(201)
       .json({ success: true, message: "signup link sent", signUpToken });
@@ -73,8 +71,7 @@ const signUp = async (req, res) => {
         if (!preUser) {
           throw new unauthenticatedError("User not found");
         }
-        // (req.body._id = preUser._id),
-        req.body.userToken = preUser.userToken;
+        (req.body._id = preUser._id), (req.body.userToken = preUser.userToken);
         req.body.password = preUser.password;
         req.body.email = preUser.email;
         // req.body = {
@@ -86,20 +83,20 @@ const signUp = async (req, res) => {
         // };
         userSchema.createIndexes({ username: 1, email: 1 }); // takes care of duplicate issues
         const newUser = await userSchema.create(req.body);
-        // if (newUser) {
-        //   await tempUserSchema.deleteOne({ _id: preUser._id });
-        // }
+        if (newUser) {
+          await tempUserSchema.deleteOne({ _id: preUser._id });
+        }
 
-        // await sendNotificationToOne("user-signed-up", {
-        //   id: newUser._id,
-        //   userName: newUser.userName,
-        // });
-        // await updateSubcriber({
-        //   id: newUser._id,
-        //   firstName: newUser.firstName,
-        //   lastName: newUser.lastName,
-        //   interest: newUser.interests,
-        // });
+        await sendNotificationToOne("user-signed-up", {
+          id: newUser._id,
+          userName: newUser.userName,
+        });
+        await updateSubcriber({
+          id: newUser._id,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          interest: newUser.interests,
+        });
         return res
           .status(201)
           .json({ success: true, message: "new account created", newUser });

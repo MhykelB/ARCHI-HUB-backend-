@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       // required: [true, "please provide valid credentials"],
     },
-    interests: [],
+    interests: { type: Array, default: [] },
     skills: [],
     qualifications: [],
     userToken: { type: String, default: "" },
