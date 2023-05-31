@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const {
-  preSignUp,
+  signUp,
   confirmEmail,
   login,
 } = require("../controllers/authcontrollers");
 
 //base = /auth
-router.post("/preSignUp", preSignUp); //working
+router.post("/signUp", preSignUp); //working
 router.post("/confirmEmail", confirmEmail); //working
 router.post("/login", login); //working
 router.get("/completeSignUp/:token", (req, res) => {

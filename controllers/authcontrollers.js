@@ -9,7 +9,7 @@ const {
   completeSignUpNotice,
 } = require("../novu/novu");
 
-const preSignUp = async (req, res) => {
+const signUp = async (req, res) => {
   async function hashPassword(input) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(input, salt);
@@ -137,4 +137,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { preSignUp, confirmEmail, login };
+module.exports = { signUp, confirmEmail, login };
