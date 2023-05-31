@@ -7,7 +7,7 @@ const {
 } = require("../controllers/authcontrollers");
 
 //base = /auth
-router.post("/signUp", preSignUp); //working
+router.post("/signUp", signUp); //working
 router.post("/confirmEmail", confirmEmail); //working
 router.post("/login", login); //working
 router.get("/completeSignUp/:token", (req, res) => {
