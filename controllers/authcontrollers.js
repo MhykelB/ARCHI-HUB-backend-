@@ -52,24 +52,27 @@ const preSignUp = async (req, res) => {
   }
 };
 // after clcicking the link, updating the info and submitting
-const signUp = async (req, res) => {
+const confirmEmail = async (req, res) => {
   const reqHeaders = req.headers.authorization;
-  let { firstName, lastName, userName } = req.body;
-  if (!reqHeaders || !firstName || !lastName || !userName) {
-    console.log("missing fields");
-    throw new badRequest("missing fields");
-  }
+  // let { firstName, lastName, userName } = req.body;
+  // if (!reqHeaders || !firstName || !lastName || !userName) {
+  //   console.log("missing fields");
+  //   throw new badRequest("missing fields");
+  // }
   if (reqHeaders.startsWith("Bearer")) {
     const token = reqHeaders.split(" ")[1];
     if (token) {
       try {
-        const validToken = jwt.verify(token, process.env.JWT_SECRET);
-        if (!validToken) {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decodedToken) {
           throw new unauthenticatedError("Invalid Token, maybe expired");
         }
-        const preUser = await tempUserSchema.findOne({ userToken: token });
+        const preUser = await tempUserSchema.findOne({
+          email: decodedToken.email,
+          userToken: token,
+        });
         if (!preUser) {
-          throw new unauthenticatedError("User not found");
+          throw new unauthenticatedError("User not found / linked expired");
         }
         (req.body._id = preUser._id), (req.body.userToken = preUser.userToken);
         req.body.password = preUser.password;
@@ -81,7 +84,8 @@ const signUp = async (req, res) => {
         //   password: preUser.password,
         //   userToken: preUser.userToken,
         // };
-        userSchema.createIndexes({ username: 1, email: 1 }); // takes care of duplicate issues
+        console.log(req.body);
+        userSchema.createIndexes({ email: 1 }); // takes care of duplicate issues
         const newUser = await userSchema.create(req.body);
         if (newUser) {
           await tempUserSchema.deleteOne({ _id: preUser._id });
@@ -91,15 +95,15 @@ const signUp = async (req, res) => {
           id: newUser._id,
           userName: newUser.userName,
         });
-        await updateSubcriber({
-          id: newUser._id,
-          firstName: newUser.firstName,
-          lastName: newUser.lastName,
-          interest: newUser.interests,
-        });
+        // await updateSubcriber({
+        //   id: newUser._id,
+        //   firstName: newUser.firstName,
+        //   lastName: newUser.lastName,
+        //   interest: newUser.interests,
+        // });
         return res
           .status(201)
-          .json({ success: true, message: "new account created", newUser });
+          .json({ success: true, message: "email confirmed", newUser });
       } catch (error) {
         throw error;
       }
@@ -133,4 +137,4 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { preSignUp, signUp, login };
+module.exports = { preSignUp, confirmEmail, login };

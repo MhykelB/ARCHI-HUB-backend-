@@ -22,12 +22,10 @@ const userSchema = new mongoose.Schema(
     firstName: {
       type: String,
       default: "",
-      required: [true, "please provide firstname"],
     },
     lastName: {
       type: String,
       default: "",
-      required: [true, "please provide lastname"],
     },
     email: { type: String, required: [true, "please provide email"] },
     fullName: {},

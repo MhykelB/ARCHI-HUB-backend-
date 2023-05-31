@@ -122,7 +122,7 @@
         "security": []
       }
     },
-    "/auth/register": {
+    "/auth/confirmEmail": {
       "post": {
         "tags": ["auth"],
         "summary": "register",
@@ -155,7 +155,7 @@
               }
             }
           },
-          "required": true
+          "required": false
         },
         "responses": {
           "200": {
